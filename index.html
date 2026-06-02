@@ -877,6 +877,12 @@
     }
     .btn:hover .btn-arrow { transform: translateX(5px); }
   </style>
+  <!-- Cal popup — chargé dès le head pour que le bouton hero fonctionne sans scroll -->
+  <script>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "popup-strategique", {origin:"https://app.cal.com"});
+    Cal.ns["popup-strategique"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
 </head>
 <body>
 
@@ -935,7 +941,7 @@
       </p>
       <div class="hero-ctas reveal d3">
         <a href="https://scorecard-ecommerce.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Diagnostic offert<span class="btn-arrow" aria-hidden="true">→</span></a>
-        <a href="#methode" class="btn btn-ghost">Réserver ma session stratégique</a>
+        <a href="#" class="btn btn-ghost" data-cal-link="alexandre-demeester/session-strategique" data-cal-namespace="popup-strategique" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Réserver ma session stratégique</a>
       </div>
     </div>
 
