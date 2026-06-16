@@ -819,6 +819,7 @@
     /* ── Custom cursor ─────────────────────────────────── */
     @media (hover: hover) {
       * { cursor: none !important; }
+      #reserver, #reserver * { cursor: auto !important; }
       .cursor {
         position: fixed;
         inset-block-start: 0;
@@ -1443,13 +1444,14 @@
       cursor.classList.add('active');
     }, { passive: true });
     document.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-    const calEl = document.getElementById('my-cal-inline-session-strategique');
-    if (calEl) {
-      calEl.addEventListener('mouseenter', () => {
-        cursor.classList.remove('active');
+    const reserverSection = document.getElementById('reserver');
+    if (reserverSection) {
+      reserverSection.addEventListener('mouseenter', () => {
+        cursor.style.display = 'none';
         mx = -200; my = -200; cx = -200; cy = -200;
-        cursor.style.left = '-200px';
-        cursor.style.top  = '-200px';
+      });
+      reserverSection.addEventListener('mouseleave', () => {
+        cursor.style.display = '';
       });
     }
     document.querySelectorAll('a, button, .nd-group, .pcard, .tcard, .sim-row, .mstep').forEach(el => {
