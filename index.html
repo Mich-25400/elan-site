@@ -1443,10 +1443,15 @@
       cursor.classList.add('active');
     }, { passive: true });
     document.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-    window.addEventListener('blur', () => {
-      cursor.classList.remove('active');
-      mx = -100; my = -100; cx = -100; cy = -100;
-    });
+    const calEl = document.getElementById('my-cal-inline-session-strategique');
+    if (calEl) {
+      calEl.addEventListener('mouseenter', () => {
+        cursor.classList.remove('active');
+        mx = -200; my = -200; cx = -200; cy = -200;
+        cursor.style.left = '-200px';
+        cursor.style.top  = '-200px';
+      });
+    }
     document.querySelectorAll('a, button, .nd-group, .pcard, .tcard, .sim-row, .mstep').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
