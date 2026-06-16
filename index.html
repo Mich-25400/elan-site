@@ -560,22 +560,24 @@
       display: flex;
       align-items: center;
       gap: 0.875rem;
-      padding-block: 0.8rem;
-      padding-inline: 0.5rem;
-      border-bottom: 1px solid oklch(16% 0.008 255);
+      padding-block: 0.875rem;
+      padding-inline: 0.75rem;
+      border-bottom: 1px solid oklch(18% 0.008 255);
+      border-left: 2px solid transparent;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.15s, border-left-color 0.15s;
     }
-    .sim-row:hover { background: oklch(11% 0.01 255); }
+    .sim-row:hover { background: oklch(14% 0.012 255); }
     .sim-cb { display: none; }
     .sim-check {
-      width: 1rem;
-      height: 1rem;
-      border: 1px solid var(--border);
+      width: 1.125rem;
+      height: 1.125rem;
+      border: 1.5px solid oklch(42% 0.018 255);
       flex-shrink: 0;
       position: relative;
       transition: border-color 0.15s, background 0.15s;
     }
+    .sim-row:hover .sim-check { border-color: oklch(55% 0.02 255); }
     .sim-cb:checked + .sim-check {
       border-color: var(--accent);
       background: var(--accent-dim);
@@ -590,17 +592,22 @@
       flex: 1;
       font-size: 0.875rem;
       font-weight: 300;
-      color: var(--muted);
+      color: var(--fg);
       transition: color 0.15s;
     }
     .sim-price {
       font-size: 0.875rem;
+      font-weight: 400;
       color: var(--muted);
       white-space: nowrap;
       transition: color 0.15s;
     }
-    .sim-row:has(.sim-cb:checked) .sim-name { color: var(--fg); }
-    .sim-row:has(.sim-cb:checked) .sim-price { color: var(--accent); }
+    .sim-row:has(.sim-cb:checked) {
+      background: oklch(14% 0.018 235);
+      border-left-color: var(--accent);
+    }
+    .sim-row:has(.sim-cb:checked) .sim-name { color: var(--fg); font-weight: 400; }
+    .sim-row:has(.sim-cb:checked) .sim-price { color: var(--accent); font-weight: 500; }
     .sim-summary {
       border: 1px solid var(--border);
       background: var(--surface);
