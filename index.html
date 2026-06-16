@@ -539,39 +539,76 @@
       max-width: 420px;
       align-self: end;
     }
-    .offers-grid {
+    .sim-wrap {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
       align-items: start;
     }
-    .offer-card {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: clamp(1.75rem, 2.5vw, 2.5rem);
-      position: relative;
-      transition: transform 0.25s ease, border-color 0.25s ease;
-    }
-    .offer-card:hover {
-      transform: translateY(-4px);
-      border-color: oklch(28% 0.008 255);
-    }
-    .offer-card.featured {
-      border-color: oklch(32% 0.09 235);
-    }
-    .featured-tag {
-      position: absolute;
-      inset-block-start: -1px;
-      inset-inline-start: 1.75rem;
-      background: var(--accent);
-      color: oklch(8% 0.010 255);
-      font-size: 0.5625rem;
-      font-weight: 700;
+    .sim-group { margin-block-end: 2rem; }
+    .sim-group-label {
+      font-size: 0.625rem;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      padding: 0.2rem 0.65rem;
+      color: var(--muted);
+      padding-block-end: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      margin-block-end: 0.25rem;
     }
-    .offer-name {
+    .sim-row {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      padding-block: 0.8rem;
+      padding-inline: 0.5rem;
+      border-bottom: 1px solid oklch(16% 0.008 255);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sim-row:hover { background: oklch(11% 0.01 255); }
+    .sim-cb { display: none; }
+    .sim-check {
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      position: relative;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .sim-cb:checked + .sim-check {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .sim-cb:checked + .sim-check::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: var(--accent);
+    }
+    .sim-name {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .sim-price {
+      font-size: 0.875rem;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.15s;
+    }
+    .sim-row:has(.sim-cb:checked) .sim-name { color: var(--fg); }
+    .sim-row:has(.sim-cb:checked) .sim-price { color: var(--accent); }
+    .sim-summary {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 2rem;
+      position: sticky;
+      top: 6rem;
+    }
+    .sim-total-label {
       font-size: 0.625rem;
       font-weight: 600;
       text-transform: uppercase;
@@ -579,48 +616,19 @@
       color: var(--muted);
       margin-block-end: 1rem;
     }
-    .offer-price {
+    .sim-total-value {
       font-family: var(--ff-display);
-      font-size: 1.875rem;
+      font-size: 2.5rem;
       font-weight: 800;
-      letter-spacing: -0.025em;
-      line-height: 1.1;
+      letter-spacing: -0.03em;
       color: var(--fg);
+      line-height: 1;
       margin-block-end: 0.25rem;
     }
-    .offer-unit {
-      font-size: 0.8125rem;
-      color: var(--muted);
-      margin-block-end: 2rem;
-    }
-    .offer-divider {
-      height: 1px;
-      background: var(--border);
-      margin-block: 1.5rem;
-    }
-    .offer-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .offer-features li {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.5;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-weight: 300;
-    }
-    .offer-features li::before {
-      content: '-';
-      color: var(--border);
-      flex-shrink: 0;
-    }
-    .offer-card.featured .offer-features li::before {
-      color: oklch(42% 0.09 235);
-    }
+    .sim-total-unit { font-size: 0.8125rem; color: var(--muted); margin-block-end: 1.5rem; }
+    .sim-count { font-size: 0.8125rem; color: var(--muted); margin-block-end: 2rem; }
+    .sim-cta { width: 100%; justify-content: center; margin-block-end: 1.5rem; }
+    .sim-note { font-size: 0.75rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
 
     /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        TEAM (dark)
@@ -788,7 +796,8 @@
       .method-steps { grid-template-columns: 1fr; }
       .diag-grid    { grid-template-columns: 1fr; }
       .offers-header{ grid-template-columns: 1fr; }
-      .offers-grid  { grid-template-columns: 1fr; }
+      .sim-wrap     { grid-template-columns: 1fr; }
+      .sim-summary  { position: static; }
       .team-header  { grid-template-columns: 1fr; }
       .team-grid    { grid-template-columns: 1fr; }
       nav           { display: none; }
@@ -862,12 +871,6 @@
     /* ── Alternate section backgrounds ────────────────── */
     #probleme { background: oklch(10% 0.010 255); }
     #offres   { background: oklch(10% 0.010 255); }
-
-    /* ── Featured card glow ────────────────────────────── */
-    .offer-card.featured {
-      background: oklch(14% 0.014 235);
-      box-shadow: 0 0 60px oklch(42% 0.12 235 / 0.14);
-    }
 
     /* ── Button arrow micro-interaction ────────────────── */
     .btn-arrow {
@@ -1142,45 +1145,97 @@
           Étape 2 -<br>Accompagnement mensuel
         </h2>
       </div>
-      <p class="offers-desc reveal d2">On exécute, on optimise, on automatise et vous gérez votre business. Trois niveaux d'engagement selon votre ambition.</p>
+      <p class="offers-desc reveal d2">Sélectionnez les services dont vous avez besoin. Le total se calcule en temps réel.</p>
     </div>
-    <div class="offers-grid">
-      <div class="offer-card reveal">
-        <p class="offer-name">Starter</p>
-        <p class="offer-price">1 500 – 2 500 €</p>
-        <p class="offer-unit">par mois · HT</p>
-        <div class="offer-divider"></div>
-        <ul class="offer-features">
-          <li>1 pôle d'expertise au choix</li>
-          <li>Reporting mensuel</li>
-          <li>1 point stratégique / mois</li>
-        </ul>
+    <div class="sim-wrap reveal d2">
+      <div class="sim-services">
+
+        <div class="sim-group">
+          <p class="sim-group-label">Dylan · Acquisition</p>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="500">
+            <span class="sim-check"></span>
+            <span class="sim-name">Gestion Google Ads Search</span>
+            <span class="sim-price">500 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="400">
+            <span class="sim-check"></span>
+            <span class="sim-name">Gestion Performance Max</span>
+            <span class="sim-price">400 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="300">
+            <span class="sim-check"></span>
+            <span class="sim-name">Optimisation Shopping (flux + budget produits)</span>
+            <span class="sim-price">300 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="250">
+            <span class="sim-check"></span>
+            <span class="sim-name">Tracking &amp; attribution</span>
+            <span class="sim-price">250 €</span>
+          </label>
+        </div>
+
+        <div class="sim-group">
+          <p class="sim-group-label">Michael · Web &amp; Conversion</p>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="500">
+            <span class="sim-check"></span>
+            <span class="sim-name">Gestion Meta Ads</span>
+            <span class="sim-price">500 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="400">
+            <span class="sim-check"></span>
+            <span class="sim-name">Optimisation site (vitesse, tunnel, UX mobile)</span>
+            <span class="sim-price">400 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="400">
+            <span class="sim-check"></span>
+            <span class="sim-name">SEO (Search Console, on-page, maillage)</span>
+            <span class="sim-price">400 €</span>
+          </label>
+        </div>
+
+        <div class="sim-group">
+          <p class="sim-group-label">Alexandre · Process &amp; IA</p>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="300">
+            <span class="sim-check"></span>
+            <span class="sim-name">Dashboard e-commerce (KPIs, Looker Studio)</span>
+            <span class="sim-price">300 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="200">
+            <span class="sim-check"></span>
+            <span class="sim-name">Reporting automatisé</span>
+            <span class="sim-price">200 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="450">
+            <span class="sim-check"></span>
+            <span class="sim-name">Automatisations (emails post-achat, relances, alertes stock)</span>
+            <span class="sim-price">450 €</span>
+          </label>
+          <label class="sim-row">
+            <input type="checkbox" class="sim-cb" data-price="350">
+            <span class="sim-check"></span>
+            <span class="sim-name">Architecture outils + intégrations</span>
+            <span class="sim-price">350 €</span>
+          </label>
+        </div>
+
       </div>
-      <div class="offer-card featured reveal d1">
-        <span class="featured-tag">Recommandé</span>
-        <p class="offer-name">Growth</p>
-        <p class="offer-price">3 000 – 4 000 €</p>
-        <p class="offer-unit">par mois · HT</p>
-        <div class="offer-divider"></div>
-        <ul class="offer-features">
-          <li>Gestion Google Ads &amp; Meta Ads</li>
-          <li>Optimisation site &amp; tunnel</li>
-          <li>Dashboard temps réel</li>
-          <li>2 points stratégiques / mois</li>
-          <li>Reporting hebdomadaire</li>
-        </ul>
-      </div>
-      <div class="offer-card reveal d2">
-        <p class="offer-name">Scale</p>
-        <p class="offer-price">4 500 – 6 000 €</p>
-        <p class="offer-unit">par mois · HT</p>
-        <div class="offer-divider"></div>
-        <ul class="offer-features">
-          <li>Tout le plan Growth</li>
-          <li>Automatisations IA &amp; process</li>
-          <li>SEO &amp; réseaux sociaux</li>
-          <li>Formation &amp; accompagnement IA</li>
-        </ul>
+      <div class="sim-summary">
+        <p class="sim-total-label">Total estimé</p>
+        <p class="sim-total-value"><span id="sim-amount">0</span> €</p>
+        <p class="sim-total-unit">/ mois · HT</p>
+        <p class="sim-count" id="sim-count">0 service sélectionné</p>
+        <a href="#reserver" class="btn btn-primary sim-cta">Réserver ma session<span class="btn-arrow" aria-hidden="true">→</span></a>
+        <p class="sim-note">Tarifs indicatifs. Un devis précis est établi après le diagnostic 360°.</p>
       </div>
     </div>
   </div>
@@ -1224,10 +1279,9 @@
         <p class="tcard-role">Process, IA &amp; Data</p>
         <ul class="tcard-skills">
           <li>Audit des process</li>
-          <li>Documentation IA</li>
+          <li>IA</li>
           <li>Automatisations</li>
           <li>Dashboarding / Reporting</li>
-          <li>Formation &amp; accompagnement</li>
         </ul>
       </div>
     </div>
@@ -1382,7 +1436,7 @@
       cursor.classList.add('active');
     }, { passive: true });
     document.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-    document.querySelectorAll('a, button, .nd-group, .pcard, .tcard, .offer-card, .mstep').forEach(el => {
+    document.querySelectorAll('a, button, .nd-group, .pcard, .tcard, .sim-row, .mstep').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
     });
@@ -1434,6 +1488,21 @@
       });
     });
   }
+
+  /* ── Price simulator ── */
+  (function () {
+    const cbs = document.querySelectorAll('.sim-cb');
+    const amountEl = document.getElementById('sim-amount');
+    const countEl  = document.getElementById('sim-count');
+    if (!amountEl || !countEl) return;
+    function update() {
+      let total = 0, count = 0;
+      cbs.forEach(cb => { if (cb.checked) { total += +cb.dataset.price; count++; } });
+      amountEl.textContent = total.toLocaleString('fr-FR');
+      countEl.textContent  = count + ' service' + (count > 1 ? 's' : '') + ' sélectionné' + (count > 1 ? 's' : '');
+    }
+    cbs.forEach(cb => cb.addEventListener('change', update));
+  })();
 </script>
 
 
