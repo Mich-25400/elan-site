@@ -1443,6 +1443,11 @@
       cursor.classList.add('active');
     }, { passive: true });
     document.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+    const calContainer = document.getElementById('my-cal-inline-session-strategique');
+    if (calContainer) {
+      calContainer.addEventListener('mouseenter', () => cursor.classList.remove('active'));
+      calContainer.addEventListener('mouseleave', () => cursor.classList.add('active'));
+    }
     document.querySelectorAll('a, button, .nd-group, .pcard, .tcard, .sim-row, .mstep').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
